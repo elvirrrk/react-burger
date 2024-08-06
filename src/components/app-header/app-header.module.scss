@@ -1,0 +1,9 @@
+@import '../../global.scss';
+.navigation {
+  display: flex;
+}
+
+.navigationButtonLink {
+  padding: 16px 20px;
+  color: $main-text;
+}
