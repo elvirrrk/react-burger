@@ -1,1 +1,11 @@
-// тут все импорты через @use так будут модули
+@import '../../common-styles/global.scss';
+@import '../../common-styles/variables.scss';
+
+.pageContainer {
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100%;
+  font-family: $main-text-font;
+  color: $main-text-color;
+  background-color: $main-bg-color;
+}

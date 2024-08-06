@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import s from './app.module.scss';
+import styles from './app.module.scss';
 import { AppHeader } from '../app-header/app-header';
+import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 
-interface IngredientData {
+export interface IngredientData {
 	_id: number;
 	name: string;
 	type: string;
@@ -18,14 +19,14 @@ interface IngredientData {
 }
 
 interface IngredientState {
-	ingredientsDataState: IngredientData[];
+	ingredientsDataState: IngredientData[] | null;
 	loading: boolean;
 }
 
 export const App: React.FC = () => {
 	const INGREDIENTS_API = 'https://norma.nomoreparties.space/api/ingredients';
 	const [ingredientsState, setIngredientsLoadingState] = useState<IngredientState>({
-		ingredientsDataState: [],
+		ingredientsDataState: null,
 		loading: true
 	})
 
@@ -34,16 +35,20 @@ export const App: React.FC = () => {
 			const getIngredientsData = async () => {
 				const requestResult = await fetch(INGREDIENTS_API);
 				const data  = await requestResult.json();
-				setIngredientsLoadingState({ingredientsDataState: data, loading: false })
+				setIngredientsLoadingState({ingredientsDataState: data.data, loading: false })
 			}
 			getIngredientsData();
 		} catch (e) {
 			throw Error(`Error ${e}`);
 		}
 	}, []);
+
 	return (
-		<div className='page'>
+		<div className={styles.pageContainer}>
 			<AppHeader/>
+			{ingredientsState.ingredientsDataState &&
+			<BurgerIngredients ingredientsData={ingredientsState.ingredientsDataState}/>
+			}
 		</div>
 	);
 };
